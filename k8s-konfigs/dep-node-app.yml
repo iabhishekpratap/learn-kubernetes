@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: my-node-app
+  # unique key of the deployment instance
+spec:
+  #3 pods should exist at all times
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-app
+
+  # template for creating pods   
+  template:
+    metadata:
+      labels:
+        app: node-app
+    #specification of the container
+    spec:
+      containers:
+        - name: node-app
+          image: iapsingh/k8s-demo:01
+          ports:
+            - containerPort: 3000

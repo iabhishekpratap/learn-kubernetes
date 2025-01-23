@@ -1,0 +1,7 @@
+#commands
+
+To Run MongoDb
+docker run -d -p 27017:27017 --network my-net --name mongo mongo
+
+To Run our Node App
+docker run --network my-net -p 3000:3000 --name mydbapp iapsingh/node-mongo-db:1.0
