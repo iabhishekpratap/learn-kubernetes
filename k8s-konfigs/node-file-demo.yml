@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-file-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node-file-app
+  template:
+    metadata:
+      labels:
+        app: node-file-app
+    spec:
+      containers:
+      - name: node-file-app
+        image: philippaul/node-file-demo:01 
+        volumeMounts:
+        - name: myvol
+          mountPath: /app/emails.txt
+
+      volumes:
+      - name: myvol
+        hostPath:
+          path: /mydata/emails.txt
+          type: FileOrCreate
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-node-file-app
+spec:
+  ports:
+    - name: http
+      port: 8082
+      targetPort: 3000
+  selector:
+    app: node-file-app
+  type: LoadBalancer
+
